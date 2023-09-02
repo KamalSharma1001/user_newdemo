@@ -82,6 +82,7 @@ const Login = () => {
           email,
           password,
         }),
+         mode: 'cors', // Set the CORS mode
       });
 
       if (response.ok) {

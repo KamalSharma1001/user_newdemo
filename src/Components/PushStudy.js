@@ -18,7 +18,7 @@ const PushStudy = () => {
         const fetchData = async () => {
             //const apiUrl = 'https://busy-lime-bream-sock.cyclic.app/api/patients';
             //const apiUrl = 'http://localhost:8000/api/data'
-            const apiUrl = 'https://busy-lime-bream-sock.cyclic.app/api/data'
+            const apiUrl = 'https://busy-lime-bream-sock.cyclic.app/api/v2/getdata'
             const accessToken = localStorage.getItem('accessToken')
 
             fetch(apiUrl, {
@@ -59,7 +59,7 @@ const PushStudy = () => {
         };
 
         fetchData();
-    }, []); 
+    }, []);
 
     const combinedData = data.map(item => ({
         ...item.patient,
@@ -104,7 +104,7 @@ const PushStudy = () => {
                 });
                 return <div className="table-plus datatable-nosort">{formattedDate}</div>;
             }
-          
+
         }
     ];
 

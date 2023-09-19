@@ -17,54 +17,26 @@ const FilterPart = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        // Fetch data from API using the access token
-        const fetchData = async () => {
-            //const apiUrl = 'https://busy-lime-bream-sock.cyclic.app/api/patients';
-            //const apiUrl = 'http://localhost:8000/api/data'
-            const apiUrl = 'https://busy-lime-bream-sock.cyclic.app/api/data'
-            const accessToken = localStorage.getItem('accessToken')
-
-            fetch(apiUrl, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${accessToken}`,
-                    'Content-Type': 'application/json',
-                },
-            })
-                .then(response => {
-                    if (response.ok) {
-                        return response.json();
-                    } else if (response.status === 403) {
-                        throw new Error('Access denied: Check authorization and permissions.');
-                    } else if (response.status === 401) {
-                        throw new Error('Unauthorized: Check credentials.');
-                    } else {
-                        throw new Error('Request failed: ' + response.statusText);
-                    }
-                })
-                .then(result => {
-                    //console.log('Result array:', result);  // Log the result array before setting the data
-                    const processedData = result.map(item => ({
-                        patient: item.patient || {},
-                        study: item.study || {},
-                        series: item.series || {},
-                        image: item.image || {},
-                    }));
-
-                    setData(processedData);
-
-                    //console.log('Data after setting:', processedData);
-                })
-                .catch(error => {
-
-                    console.error('API request error:', error.message);
-                    // Handle error, display error messages, etc.
-                });
-
-        };
-
-        fetchData();
+        fetchAPI();
     }, []);
+
+    const fetchAPI = async () => {
+        try {
+            const responseAPI = await fetch("https://busy-lime-bream-sock.cyclic.app/api/v2/getdata");
+            const resJson = await responseAPI.json();
+            const processedData = resJson.map(item => ({
+                patient: item.patient || {},
+                study: item.study || {},
+                series: item.series || {},
+                image: item.image || {},
+            }));
+
+            setData(processedData);
+        } catch (err) {
+            console.log("API Error Study: ", err);
+        }
+    };
+
 
     const Headercolumns = [
         {
@@ -241,9 +213,9 @@ const FilterPart = () => {
 
     const handleZVPF = () => {
         if (arePatientsSelected()) {
-            // console.log(selectedPatients)
+            console.log(selectedPatients)
             const selectedIds = selectedPatients.map(patient => patient);
-            const queryString = selectedIds.map(id => `${id.patient}`).join('&');
+            const queryString = selectedIds.map(id => `${id.StudyID}`).join('&');
             //history(`/user/dashboard/zvpf/${queryString}`);
             window.open(`/user/dashboard/zvpf/${queryString}`, '_blank', 'width=760,height=760');
         } else {

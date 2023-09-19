@@ -73,7 +73,9 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch('https://busy-lime-bream-sock.cyclic.app/userauth/login', {
+      const uri = 'https://busy-lime-bream-sock.cyclic.app/userauth/login'
+      //const uri = 'http://localhost:8000/userauth/login'
+      const response = await fetch(uri, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,7 +84,6 @@ const Login = () => {
           email,
           password,
         }),
-         mode: 'cors', // Set the CORS mode
       });
 
       if (response.ok) {
@@ -90,6 +91,9 @@ const Login = () => {
 
         localStorage.setItem('accessToken', data.token);
         localStorage.setItem('email', email);
+
+        /* Save session records  */
+        await sendSessionData();
 
         // Show loading state using interval
         setLoadingInterval(setInterval(() => {
@@ -127,6 +131,32 @@ const Login = () => {
   //     navigate('/user/dashboard'); // Redirect to dashboard if logged in
   //   }
   // }, []);
+
+  /* Session Manage */
+  async function sendSessionData() {
+    const token = localStorage.getItem('accessToken');
+    try {
+      //const sessionApiUrl = 'http://localhost:8000/session';
+      const sessionApiUrl = 'https://busy-lime-bream-sock.cyclic.app/session';
+      const response = await fetch(sessionApiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          email,
+        }),
+      });
+      if (response.ok) {
+        // Session data saved successfully
+      } else {
+        console.error('Error sending session data:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error sending session data:', error);
+    }
+  }
 
   useEffect(() => {
     // Clear the 'accessToken' in localStorage on page load

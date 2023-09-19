@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import Navbar from './Navbar'
 import StudiesPart from './StudiesPart';
+import NewTable from './NewTable';
 
 
 
@@ -21,7 +22,11 @@ const UserDashboard = () => {
     return (
         <>
             <Navbar />
+
+            {/* Old Table with old api data  */}
             <StudiesPart />
+
+            {/* <NewTable/> */}
         </>
     )
 }

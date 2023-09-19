@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+	<link rel="stylesheet" href="datatable1.css">
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/dataTables.bootstrap5.min.css">
+	<link rel="stylesheet" href="./style.css">
+
+
+
+</head>
+
+<body  style="background-color: #2F2F33;">
+	<!-- partial:index.partial.html -->
+	<div class="button-group">
+		<button class="filter-btn"  data-target="DX">DX</button>
+		<button class="filter-btn"  data-target="OT">OT</button>
+		<button class="filter-btn"  data-target="CT">CT</button>
+		<button class="filter-btn"  data-target="CR">CR</button>
+		<button class="filter-btn"  data-target="ECG">ECG</button>
+		<button class="filter-btn"  data-target="EC">EC</button>
+		<button class="filter-btn"  data-target="All">All</button>
+	</div>
+
+	
+
+	<!-- <div class="button-group"><button class="">1d</button><button class="">3d</button><button
+			class="">1w</button><button class="">1m</button><button class="">1y</button><button
+			class="active">Any</button></div> -->
+	<table id="example" style="background-color: transparent;" class="table table-striped table-bordered"
+		cellspacing="0" width="100%">
+		<thead>
+			<tr>
+				<th></th>
+				<th></th>
+				<th><i class="fa fa-file" aria-hidden="true"></i></th>
+				<th>ID</th>
+				<th>Name</th>
+				<th>Accession</th>
+				<th>Modality</th>
+				<th>Description</th>
+				<th>Date Time</th>
+				<th>Received On</th>
+				<th>Source AE</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<input type="checkbox" name="" id="">
+				</td>
+				<td>
+					<a href="try.html">
+
+						<i class="fa-solid fa-eye"></i>
+				</td>
+				</a>
+				<td><i class="fa fa-file" aria-hidden="true"></i></td>
+				<td>00000</td>
+				<td>Anonymized</td>
+				<td>20180816124124</td>
+				<td>OT</td>
+				<td>CEREBRAL</td>
+				<td>20161010 094805</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td>
+					<input type="checkbox" name="" id="">
+				</td>
+				<td>
+					<a href="try.html">
+
+						<i class="fa-solid fa-eye"></i>
+				</td>
+				<td><i class="fa fa-file" aria-hidden="true"></i></td>
+				<td>0</td>
+				<td>Anonymized</td>
+				<td>20180816124124</td>
+				<td>CT</td>
+				<td>CEREBRAL</td>
+				<td>20161010 094805</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td>
+					<input type="checkbox" name="" id="">
+				</td>
+				<td>
+					<a href="try.html">
+
+						<i class="fa-solid fa-eye"></i>
+				</td>
+				<td><i class="fa fa-file" aria-hidden="true"></i></td>
+				<td>0</td>
+				<td>Anonymized</td>
+				<td>20180816124124</td>
+				<td>CR</td>
+				<td>CEREBRAL</td>
+				<td>20161010 094805</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<tr>
+				<td>
+					<input type="checkbox" name="" id="">
+				</td>
+				<td>
+					<a href="try.html">
+
+						<i class="fa-solid fa-eye"></i>
+				</td>
+				<td><i class="fa fa-file" aria-hidden="true"></i></td>
+				<td>0</td>
+				<td>Anonymized</td>
+				<td>20180816124124</td>
+				<td>ECG</td>
+				<td>CEREBRAL</td>
+				<td>20161010 094805</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+
+			<tr>
+				<td>
+					<input type="checkbox" name="" id="">
+				</td>
+				<td>
+					<a href="try.html">
+
+						<i class="fa-solid fa-eye"></i>
+				</td>
+				<td><i class="fa fa-file" aria-hidden="true"></i></td>
+				<td>0</td>
+				<td>Anonymized</td>
+				<td>20180816124124</td>
+				<td>ES</td>
+				<td>CEREBRAL</td>
+				<td>20161010 094805</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td>
+					<input type="checkbox" name="" id="">
+				</td>
+				<td>
+					<a href="try.html">
+
+						<i class="fa-solid fa-eye"></i>
+				</td>
+				<td><i class="fa fa-file" aria-hidden="true"></i></td>
+				<td>0</td>
+				<td>Anonymized</td>
+				<td>20180816124124</td>
+				<td>IO</td>
+				<td>CEREBRAL</td>
+				<td>20161010 094805</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td>
+					<input type="checkbox" name="" id="">
+				</td>
+				<td>
+					<a href="try.html">
+
+						<i class="fa-solid fa-eye"></i>
+				</td>
+				<td><i class="fa fa-file" aria-hidden="true"></i></td>
+				<td>0</td>
+				<td>Anonymized</td>
+				<td>20180816124124</td>
+				<td>MG</td>
+				<td>CEREBRAL</td>
+				<td>20161010 094805</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td>
+					<input type="checkbox" name="" id="">
+				</td>
+				<td>
+					<a href="try.html">
+
+						<i class="fa-solid fa-eye"></i>
+				</td>
+				<td><i class="fa fa-file" aria-hidden="true"></i></td>
+				<td>0</td>
+				<td>Anonymized</td>
+				<td>20180816124124</td>
+				<td>MR</td>
+				<td>CEREBRAL</td>
+				<td>20161010 094805</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+			<tr>
+				<td>
+					<input type="checkbox" name="" id="">
+				</td>
+				<td>
+					<a href="try.html">
+
+						<i class="fa-solid fa-eye"></i>
+				</td>
+				<td><i class="fa fa-file" aria-hidden="true"></i></td>
+				<td>0</td>
+				<td>Anonymized</td>
+				<td>20180816124124</td>
+				<td>NM</td>
+				<td>CEREBRAL</td>
+				<td>20161010 094805</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" name="" id="">
+				</td>
+				<td>
+					<a href="try.html">
+
+						<i class="fa-solid fa-eye"></i>
+				</td>
+				<td><i class="fa fa-file" aria-hidden="true"></i></td>
+				<td>0</td>
+				<td>Anonymized</td>
+				<td>20180816124124</td>
+				<td>PT</td>
+				<td>CEREBRAL</td>
+				<td>20161010 094805</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" name="" id="">
+				</td>
+				<td>
+					<a href="try.html">
+
+						<i class="fa-solid fa-eye"></i>
+				</td>
+				<td><i class="fa fa-file" aria-hidden="true"></i></td>
+				<td>0</td>
+				<td>Anonymized</td>
+				<td>20180816124124</td>
+				<td>DX</td>
+				<td>CEREBRAL</td>
+				<td>20161010 094805</td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>
+					<input type="checkbox" name="" id="">
+				</td>
+				<td class="tryeye" >
+					<a href="try.html">
+						<i class="fa-solid fa-eye"></i>
+				</td>
+				<td><i class="fa fa-file" aria-hidden="true"></i></td>
+				<td>0</td>
+				<td>Anonymized</td>
+				<td>20180816124124</td>
+				<td>OP, OPT</td>
+				<td>CEREBRAL</td>
+				<td>20161010 094805</td>
+				<td></td>
+				<td></td>
+			</tr>
+
+		</tbody>
+	</table>
+
+	<!-- JavaScript dependencies -->
+	<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+	<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+	<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+	<script src="./script.js"></script>
+
+	<script>
+		// jQuery script to apply dark background and alternating row colors
+		$(document).ready(function () {
+			// Apply dark background to the entire table
+			$('table').css('background-color', '#2b2b2b');
+
+			// Apply alternating row colors
+			$('tbody tr:even').css('background-color', '#383842');
+			$('tbody tr:odd').css('background-color', '#afafaf');
+		});
+	</script>
+
+	<script>
+		$(document).ready(function () {
+			// Initialize DataTables
+			var table = $('#example').DataTable();
+
+			// Track the selected tabs
+			var selectedTabs = [];
+
+			// Filter table based on button click
+			$('.filter-btn').on('click', function () {
+				// Get the data target of the clicked button
+				var target = $(this).data('target');
+
+				// Toggle the selection
+				if (selectedTabs.includes(target)) {
+					selectedTabs = selectedTabs.filter(tab => tab !== target);
+					$(this).removeClass('active');
+				} else {
+					selectedTabs.push(target);
+					$(this).addClass('active');
+				}
+
+				// Clear any existing search
+				table.search('').draw();
+
+				// Apply filter based on selected tabs
+				if (selectedTabs.length > 0) {
+					table.column(6).search(selectedTabs.map(tab => '^' + tab + '$').join('|'), true, false).draw();
+				}
+			});
+
+			// Show all data when "All" button is clicked
+			$('.filter-btn[data-target="All"]').on('click', function () {
+				// Clear the selected tabs and remove the active class from all buttons
+				selectedTabs = [];
+				$('.filter-btn').removeClass('active');
+
+				// Clear any existing search and filters
+				table.search('').columns().search('').draw();
+			});
+
+			// Add a row for "Data not found" when a column has no data
+			table.on('xhr', function () {
+				var data = table.ajax.json();
+				var columnCount = table.columns()[0].length;
+				var notFoundRow = '<tr><td colspan="' + columnCount + '">Data not found</td></tr>';
+
+				if (data.data.length === 0) {
+					table.rows.add($(notFoundRow)).draw();
+				}
+			});
+		});
+
+	</script>
+	
+
+</body>
+
+</html>

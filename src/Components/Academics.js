@@ -35,7 +35,7 @@ const AcademicsData = () => {
     const fetchData = async () => {
       //const apiUrl = 'https://busy-lime-bream-sock.cyclic.app/api/patients';
       //const apiUrl = 'http://localhost:8000/api/data'
-      const apiUrl = 'https://busy-lime-bream-sock.cyclic.app/api/data'
+      const apiUrl = 'https://busy-lime-bream-sock.cyclic.app/api/v2/getdata'
       const accessToken = localStorage.getItem('accessToken')
 
       fetch(apiUrl, {
@@ -64,6 +64,7 @@ const AcademicsData = () => {
             series: item.series || {},
             image: item.image || {},
           }));
+
 
           setData(processedData);
           console.log('Data after setting:', processedData[0]);

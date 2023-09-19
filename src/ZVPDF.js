@@ -8,7 +8,7 @@ const ZVPDF = () => {
 
     const fetchData = async () => {
         //const apiUrl = `http://localhost:8000/api/data/${id}`;
-        const apiUrl = `https://busy-lime-bream-sock.cyclic.app/api/data/${id}`;
+        const apiUrl = `https://busy-lime-bream-sock.cyclic.app/api/v2/getdata?study=${id}`;
         const accessToken = localStorage.getItem('accessToken');
         try {
             const response = await fetch(apiUrl, {
@@ -28,17 +28,18 @@ const ZVPDF = () => {
                     throw new Error('Request failed: ' + response.statusText);
                 }
             }
+            const result = await response.json();
 
-            const result = await response.json()
-            //console.log(result)
-            const processedData = {
-                patient: result.patient || {},
-                study: result.study || {},
-                series: result.series || {},
-                image: result.image || {},
-            };
-            //console.log("Processed Data:", processedData);
-            setData([processedData]);
+            const processedData = result.map(item => ({
+                patient: item.patient || {},
+                study: item.study || {},
+                series: item.series || {},
+                image: item.image || {},
+            }));
+            console.log("ZVPDF Processed Data:", processedData);
+
+            // Assuming 'setData' is a state update function
+            setData(processedData);
 
         } catch (error) {
             console.error('API request error:', error.message);

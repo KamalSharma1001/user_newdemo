@@ -1,0 +1,43 @@
+body {
+  margin: 2em;
+}
+
+/* .filter-btn.active {
+    background-color: #e51b48!important;
+    color: #fff;
+  } */
+
+.button-group > button.active {
+  background-color: #e51b48 !important;
+  color: #fff;
+}
+
+div.dataTables_wrapper div.dataTables_info {
+  padding-top: 0.85em;
+  color: #fff;
+}
+
+.button-group {
+  align-items: center;
+  display: flex;
+  justify-content: flex-start;
+}
+.button-group > button:first-child {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.button-group > button:not(:last-child) {
+  border-right: none;
+}
+
+.button-group > button {
+  background-color: #383842;
+  border: 0.1rem solid #27272b;
+  border-radius: 0.3rem;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 400;
+  padding: 10px 15px;
+  margin: 18px 0px;
+}

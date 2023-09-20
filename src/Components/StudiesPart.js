@@ -37,6 +37,42 @@ const FilterPart = () => {
         }
     };
 
+    const [studiesOpen, setStudiesOpen] = useState(false);
+    const [selectedStudies, setSelectedStudies] = useState([]);
+
+    const handleLock = () => {
+        if (arePatientsSelected()) {
+            // Toggle the studiesOpen state when the button is clicked
+            setStudiesOpen(!studiesOpen);
+
+            // Update the 'locked' property for selected studies based on the studiesOpen state
+            const updatedData = data.map(study => {
+                if (selectedStudies.includes(study.id)) {
+                    return {
+                        ...study,
+                        locked: studiesOpen,
+                    };
+                }
+                return study;
+            });
+            // Update your data with the modified 'locked' property
+            setData(updatedData);
+            // Open the new window
+            const newWindow = window.open('/viewerOpenHoga', '_blank', 'width=760,height=760');
+
+            // Check if the new window is closed and reload the page
+            const checkClosed = () => {
+                if (newWindow && newWindow.closed) {
+                    window.location.reload();
+                } else {
+                    setTimeout(checkClosed, 1000); // Check every second
+                }
+            };
+            checkClosed();
+        } else {
+            alert("Please select one or more patients."); // Updated message to reflect patients
+        }
+    };
 
     const Headercolumns = [
         {
@@ -106,8 +142,11 @@ const FilterPart = () => {
         {
             name: 'Lock',
             selector: row => row.lock,
-
-            cell: row => <div>🔐</div>
+            cell: row => (
+                <div>
+                    {studiesOpen ? '🔒 Lock' : '🔓 Unlock'}
+                </div>
+            ),
         },
         // {
         //     name: 'Group',
@@ -222,6 +261,7 @@ const FilterPart = () => {
             alert("Please select one or more studies.");
         }
     }
+
     const handlePushStudyWindow = () => {
         if (arePatientsSelected()) {
             navigate("/user/dashboard/pushstudy")
@@ -378,11 +418,12 @@ const FilterPart = () => {
                         <div className="flex justify-center space-x-4">
                             <button
                                 className="bg-slate-400 hover:bg-blue-600 text-white font-semibold  px-4 rounded-full"
-                                onClick={() => alert("Please select one or more studies.")}
+                                //onClick={() => alert("Please select one or more studies.")}
+                                onClick={handleLock}
                             >
-                                <Link to='/viewerOpenHoga'>
-                                    Load Studies
-                                </Link>
+                                {/* <Link to='/viewerOpenHoga'> */}
+                                Load Studies
+                                {/*  </Link> */}
                             </button>
                             <button
                                 className="bg-slate-400 hover:bg-blue-600 text-white font-semibold px-4 rounded-full"

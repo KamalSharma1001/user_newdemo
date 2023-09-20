@@ -71,7 +71,6 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
     try {
       const uri = 'https://busy-lime-bream-sock.cyclic.app/userauth/login'
       //const uri = 'http://localhost:8000/userauth/login'
@@ -122,37 +121,38 @@ const Login = () => {
     }
   }
 
-  // useEffect(() => {
-  //   if (!localStorage.getItem('accessToken')) {
-  //     localStorage.removeItem('accessToken');
-  //     navigate('/user/login'); // Redirect to login page if not logged in
-  //   } else {
-  //     setIsLoading(true);
-  //     navigate('/user/dashboard'); // Redirect to dashboard if logged in
-  //   }
-  // }, []);
 
   /* Session Manage */
   async function sendSessionData() {
     const token = localStorage.getItem('accessToken');
     try {
-      //const sessionApiUrl = 'http://localhost:8000/session';
-      const sessionApiUrl = 'https://busy-lime-bream-sock.cyclic.app/session';
-      const response = await fetch(sessionApiUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          email,
-        }),
-      });
-      if (response.ok) {
-        // Session data saved successfully
+      // Fetch the user's IP address from ipify
+      const ipifyResponse = await fetch('https://api.ipify.org?format=json');
+      if (ipifyResponse.ok) {
+        const { ip } = await ipifyResponse.json();
+        //const sessionApiUrl = 'http://localhost:8000/session';
+        const sessionApiUrl = 'https://busy-lime-bream-sock.cyclic.app/session';
+        const response = await fetch(sessionApiUrl, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            email,
+            ip
+          }),
+        });
+        if (response.ok) {
+          // Session data saved successfully
+        } else {
+          console.error('Error sending session data:', response.statusText);
+        }
       } else {
-        console.error('Error sending session data:', response.statusText);
+        console.error('Error fetching IP address:', ipifyResponse.statusText);
       }
+
+
     } catch (error) {
       console.error('Error sending session data:', error);
     }
@@ -208,6 +208,7 @@ const Login = () => {
               </div>
 
               <button class=" w-full text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded text-sm" onClick={handleLogin}>Sign In</button>
+
               {/* <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                 Don’t have an account yet? <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
               </p> */}

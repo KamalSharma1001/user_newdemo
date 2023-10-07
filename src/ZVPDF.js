@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import CustomDataTable from './Components/DataComponent/CustomDataTable';
+import DataTable from 'react-data-table-component';
 
 const ZVPDF = () => {
     const { id } = useParams();
@@ -59,12 +60,13 @@ const ZVPDF = () => {
     //console.log(combinedData)
 
     const Headercolumns = [
-        {
-            name: 'Patient Id',
-            //selector: row => row.Id,
-            cell: row => <div className="table-plus datatable-nosort">{row.id}</div>,
-            //sortable: true,
-        },
+        // {
+        //     name: 'Patient Id',
+        //     //selector: row => row.Id,
+        //     cell: row => <div className="table-plus datatable-nosort">{row.id}</div>,
+        //     //sortable: true,
+        //     //disableSelection: true,
+        // },
         {
             name: 'Patient Name',
             //selector: row => row.PatientName,
@@ -112,10 +114,45 @@ const ZVPDF = () => {
                 <p>Modality: {combinedData.Modality}</p>
             </div>
         </div> */}
-            <CustomDataTable filterData={combinedData} headers={Headercolumns} tittleName={""} filterControls={""} onRowSelected={""} />
+            <div className='container mx-auto mt-10 text-black'>
+            <DataTable
+                title={""}
+                columns={Headercolumns}
+                data={combinedData}
+                selectableRows
+                //onRowClicked={handleRowClick}
+                pagination
+                //progressPending={pending}
+                // progressComponent={<CustomLoader />}
+                //progressComponent={<Loading />}
+                dense
+                customStyles={{
+                    rows: {
+                        style: {
+                            fontSize: '14px',
+                        }
+                    },
+                    cells: {
+                        style: {
+                            fontSize: '14px',
+                        }
+                    },
+                    headCells: {
+                        style: {
+                            backgroundColor: '#ccc8c8', // Background color of header cells
+                            fontWeight: 'bold',
+
+                        },
+                    },
+
+                }}
+                //noDataComponent={<NoDataComponent />}
+                />
+            </div>
         </>
     );
 
 }
 
 export default ZVPDF
+

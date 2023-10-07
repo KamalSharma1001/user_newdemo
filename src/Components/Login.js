@@ -87,7 +87,7 @@ const Login = () => {
 
       if (response.ok) {
         const data = await response.json();
-
+        
         localStorage.setItem('accessToken', data.token);
         localStorage.setItem('email', email);
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import CustomDataTable from './DataComponent/CustomDataTable'
+import JSZip from 'jszip'
 
 const StudiesPart = () => {
     return (
@@ -14,6 +15,7 @@ export default StudiesPart
 
 const FilterPart = () => {
     const [data, setData] = useState([])
+    const [ID, setID] = useState('')
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -29,9 +31,10 @@ const FilterPart = () => {
                 study: item.study || {},
                 series: item.series || {},
                 image: item.image || {},
+                id: setID(item._id)
             }));
-
             setData(processedData);
+
         } catch (err) {
             console.log("API Error Study: ", err);
         }
@@ -58,7 +61,13 @@ const FilterPart = () => {
             // Update your data with the modified 'locked' property
             setData(updatedData);
             // Open the new window
-            const newWindow = window.open('/viewerOpenHoga', '_blank', 'width=760,height=760');
+            //const newWindow = window.open('/viewerOpenHoga', '_blank', 'width=760,height=760');
+            let studyDataID;
+            combinedData.forEach(item => {
+                studyDataID = item.StudyInstanceUid
+            })
+            //window.open(`http://localhost:3001/sampleview.html?studyId=` + studyDataID, '_blank', 'width=1500,height=760');
+            const newWindow = window.open(`https://viwer-study-main.vercel.app/index.html?studyId=` + studyDataID, '_blank', 'width=1500,height=760');
 
             // Check if the new window is closed and reload the page
             const checkClosed = () => {
@@ -158,7 +167,13 @@ const FilterPart = () => {
             name: 'Actions',
             selector: row => row.action,
             sortable: false,
-            cell: row => <div className="datatable-nosort"><span className='text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4 text-xs'>View/Download</span></div>,
+            cell: row => <div className="datatable-nosort"><span className='text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4 text-xs'>
+                {/* <button onClick={handleViewData}>View</button> */}
+                <button onClick={handleLock}>View</button>
+
+                <button onClick={handleDownloadData}>/Download</button>
+            </span>
+            </div>,
         },
     ];
 
@@ -166,7 +181,21 @@ const FilterPart = () => {
         ...item.patient,
         ...item.series,
         ...item.study,
+        ...item.image
     }));
+
+    const handleViewData = () => {
+        let studyDataID;
+        combinedData.forEach(item => {
+            studyDataID = item.StudyInstanceUid
+        })
+        //window.open(`http://localhost:3001/sampleview.html?studyId=` + studyDataID, '_blank', 'width=1500,height=760');
+        window.open(`https://viwer-study-main.vercel.app/index.html?studyId=` + studyDataID, '_blank', 'width=1500,height=760');
+    }
+    const handleDownloadData = async () => {
+        
+    };
+
 
     const modalityOptions = ['CT', 'MR', 'DT', 'All']; // Add any other modalities here
     const [selectedFilters, setSelectedFilters] = useState([]);
@@ -252,7 +281,6 @@ const FilterPart = () => {
 
     const handleZVPF = () => {
         if (arePatientsSelected()) {
-            console.log(selectedPatients)
             const selectedIds = selectedPatients.map(patient => patient);
             const queryString = selectedIds.map(id => `${id.StudyID}`).join('&');
             //history(`/user/dashboard/zvpf/${queryString}`);

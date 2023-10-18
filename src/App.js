@@ -11,6 +11,8 @@ import ApiData from './ApiData';
 import Error404 from './Components/Error404';
 import ZVPDF from './ZVPDF';
 import TextEditor from './Components/TextEditor';
+import TotalStudyData from './Components/TotalStudyData';
+import ReportsTab from './Components/ReportsTab';
 
 function App() {
   return (
@@ -27,6 +29,10 @@ function App() {
 
 
         <Route path='/user/dashboard/zvpf/:id' element={<ZVPDF />} />
+
+        {/* Show total studies */}
+        <Route path='/user/totalstudies/:id' element={<TotalStudyData />} />
+        <Route path='/user/reports/:id' element={<ReportsTab />} />
 
         <Route path='/testerpage' element={<ApiData />} />
 

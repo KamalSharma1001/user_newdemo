@@ -90,7 +90,10 @@ const FilterPart = () => {
         },
         {
             name: 'Patient ID',
-            selector: row => row.PatientId,
+            selector: row =>
+                <div>
+                    <button onClick={handleTotalStudy}>➕</button>{row.PatientId},
+                </div>
         },
         {
             name: 'Patient Name',
@@ -145,7 +148,7 @@ const FilterPart = () => {
         // },
         {
             name: 'Reported By',
-            selector: row => row.PerformingPhysiciansName,
+            selector: row => row.PatientId,
 
         },
         {
@@ -157,12 +160,13 @@ const FilterPart = () => {
                 </div>
             ),
         },
-        // {
-        //     name: 'Group',
-        //     selector: row => row.group,
-
-        //     cell: row => <div></div>
-        // },
+        {
+            name: 'Reports',
+            //selector: row => row.group,
+            cell: row => <div>
+                <button onClick={handleReportsPatient}>📜</button>
+            </div>
+        },
         {
             name: 'Actions',
             selector: row => row.action,
@@ -176,7 +180,6 @@ const FilterPart = () => {
             </div>,
         },
     ];
-
     const combinedData = data.map(item => ({
         ...item.patient,
         ...item.series,
@@ -195,7 +198,6 @@ const FilterPart = () => {
     const handleDownloadData = async () => {
         
     };
-
 
     const modalityOptions = ['CT', 'MR', 'DT', 'All']; // Add any other modalities here
     const [selectedFilters, setSelectedFilters] = useState([]);
@@ -305,6 +307,67 @@ const FilterPart = () => {
         }
         else {
             alert("Please select one or more studies.")
+        }
+    }
+
+    // **************************** Total Study ****************************
+    let totalStudyWindow;
+
+    const handleTotalStudy = () => {
+        if (arePatientsSelected()) {
+            const width = 650;
+            const height = 400;
+            const left = window.screen.width / 2 - width / 2;
+            const top = window.screen.height / 2 - height / 2;
+
+            const selectedIds = selectedPatients.map(patient => patient);
+
+            const queryString = selectedIds.map(id => `${id.StudyID}`).join('&');
+            // Open the new window and store its reference
+            // Set the title of the new tab
+            totalStudyWindow = window.open(`/user/totalstudies/${queryString}`, '_blank', `width=${width},height=${height},left=${left},top=${top}`);
+            totalStudyWindow.document.title = 'Your New Tab Title';
+
+
+            totalStudyWindow.addEventListener('blur', () => {
+                setTimeout(() => {
+                    if (totalStudyWindow) {
+                        totalStudyWindow.close();
+                    }
+                }, 60000); // 1 minute = 60,000 milliseconds
+            });
+            totalStudyWindow.document.title = 'Hey';
+        }
+        else {
+            alert("Please select one or more studies.");
+        }
+
+    };
+
+    // **************************** Reports open ****************************
+
+    const handleReportsPatient = () => {
+        if (arePatientsSelected()) {
+            const width = 1000;
+            const height = 600;
+            const left = window.screen.width / 2 - width / 2;
+            const top = window.screen.height / 2 - height / 2;
+
+            const selectedIds = selectedPatients.map(patient => patient);
+            const queryString = selectedIds.map(id => `${id.StudyID}`).join('&');
+            // Open the new window and store its reference
+            totalStudyWindow = window.open(`/user/reports/${queryString}`, '_blank', `width=${width},height=${height},left=${left},top=${top}`);
+
+            totalStudyWindow.addEventListener('blur', () => {
+                setTimeout(() => {
+                    if (totalStudyWindow) {
+                        totalStudyWindow.close();
+                    }
+                }, 600000); // 1 minute = 60,000 milliseconds
+            });
+        }
+        else {
+            alert("Please select one or more studies.");
         }
     }
 
@@ -517,6 +580,7 @@ const FilterPart = () => {
                     </div>
                 </div>
             </section>
+
             <CustomDataTable tittleName={""} headers={Headercolumns} filterData={filteredData} filterControls={filterControls} onRowSelected={handleRowSelection} />
         </>
     )

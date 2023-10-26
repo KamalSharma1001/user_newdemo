@@ -8,6 +8,7 @@ const ReportsTab = () => {
   })
 
   const [showFileUpload, setShowFileUpload] = useState(false);
+  const [editor, setEditorState] = useState(false)
   const handleCheckboxChange = () => {
     alert("Sever not set to upload the any file");
     setShowFileUpload(!showFileUpload);
@@ -51,9 +52,18 @@ const ReportsTab = () => {
       console.error('API request error:', error.message);
     }
   };
+
+
+  const handleEditor = () => {
+
+  }
+
+
   useEffect(() => {
     fetchData();
   }, []);
+
+  const googleDocsUrl = 'https://docs.google.com/document/d/1e5g66iZrhgDyoPoXDubYS7Mg9ZN43ou0TXQBXUzblT0/edit';
 
 
   return (
@@ -91,7 +101,7 @@ const ReportsTab = () => {
         </div>
         <div style={checkboxContainerStyle}>
           <label style={checkboxStyle}>
-            <input type="radio" name="editor" /> Advanced Editor
+            <input type="radio" name="editor" onClick={(e) => { setEditorState(true) }} /> Advanced Editor
           </label>
           <label style={checkboxStyle}>
             <input type="radio" name="editor" onChange={handleCheckboxChange} /> Attach a file
@@ -110,11 +120,35 @@ const ReportsTab = () => {
             <option value="Signed off">Signed off</option>
           </select>
         </div>
+
       </div>
+      {
+        editor ? <>
+          <div style={containerStyleFrame}>
+            <iframe
+              src={googleDocsUrl}
+              style={iframeStyle}
+              title="Google Docs"
+            ></iframe>
+          </div>
+        </> : ""
+      }
     </>
   )
 }
 
+const containerStyleFrame = {
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  height: '100vh', // Center vertically
+};
+
+const iframeStyle = {
+  maxWidth: '100%',
+  width: '100%',
+  height: '100%',
+};
 
 const containerStyle = {
   border: '5px solid #000',
@@ -149,5 +183,40 @@ const checkboxStyle = {
   display: 'inline-block',
   margin: '0 10px',
 };
+
+
+const Editor = () => {
+  const [content, setContent] = useState('');
+
+  const handleContentChange = (e) => {
+    setContent(e.target.innerHTML);
+  };
+
+  const handleSave = () => {
+    // You can implement the save functionality here
+    console.log('Text saved:', content);
+  };
+
+  return (
+    <>
+      <div>
+        <h1>Text Editor</h1>
+        <div
+          contentEditable={true}
+          style={{
+            border: '1px solid #ccc',
+            minHeight: '200px',
+            padding: '10px',
+            fontFamily: 'Arial, sans-serif',
+          }}
+          onInput={handleContentChange}
+          dangerouslySetInnerHTML={{ __html: content }}
+        ></div>
+        <button onClick={handleSave}>Save</button>
+      </div>
+    </>
+  )
+}
+
 
 export default ReportsTab

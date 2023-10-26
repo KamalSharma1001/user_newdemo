@@ -98,7 +98,7 @@ const FilterPart = () => {
         {
             name: 'Patient Name',
             selector: row => row.PatientName,
-            cell: row => <div className="table-plus datatable-nosort">{row.PatientName}</div>,
+            cell: row => <div className="table-plus datatable-nosort" onClick={handleLock}><u className='' style={{cursor:'pointer '}}>{row.PatientName}</u></div>,
             sortable: true,
         },
         {

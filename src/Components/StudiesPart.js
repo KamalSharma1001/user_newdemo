@@ -33,6 +33,7 @@ const FilterPart = () => {
                 image: item.image || {},
                 id: setID(item._id)
             }));
+            ///console.log(processedData)
             setData(processedData);
 
         } catch (err) {
@@ -89,18 +90,20 @@ const FilterPart = () => {
             cell: row => <input type="checkbox" name="" id="" onChange={() => handleRowSelection(row)} />,
         },
         {
+            name: 'Patient Name',
+            selector: row => row.PatientName,
+            cell: row => <div className="table-plus datatable-nosort" onClick={handleLock}><u className='' style={{ cursor: 'pointer ' }}>
+                <button onClick={handleTotalStudy}>➕</button>{row.PatientName}</u></div>,
+            sortable: true,
+        },
+        {
             name: 'Patient ID',
             selector: row =>
                 <div>
-                    <button onClick={handleTotalStudy}>➕</button>{row.PatientId},
+                    {row.PatientId},
                 </div>
         },
-        {
-            name: 'Patient Name',
-            selector: row => row.PatientName,
-            cell: row => <div className="table-plus datatable-nosort" onClick={handleLock}><u className='' style={{cursor:'pointer '}}>{row.PatientName}</u></div>,
-            sortable: true,
-        },
+
         {
             name: 'Age',
             selector: row => row.Age,
@@ -119,27 +122,34 @@ const FilterPart = () => {
             selector: row => row.Modality,
 
         },
-        // {
-        //     name: 'Center',
-        //     selector: row => row.center,
+        {
+            name: 'Center',
+            selector: row => (!row.center ? 'NA' : row.center),
 
-        // },
+        },
         {
             name: 'Scan Date',
             selector: row => row.StudyDate,
             cell: row => {
+                // const isoDateString = row.StudyDate;
+                // const date = new Date(isoDateString);
+                // const formattedDate = date.toLocaleString('default', {
+                //     year: 'numeric',
+                //     month: 'short',
+                //     day: 'numeric',
+                //     hour: 'numeric',
+                //     minute: 'numeric'
+                // });
                 const isoDateString = row.StudyDate;
                 const date = new Date(isoDateString);
-                const formattedDate = date.toLocaleString('default', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                    hour: 'numeric',
-                    minute: 'numeric'
-                });
+                const day = date.getDate();
+                const month = date.getMonth() + 1;
+                const year = date.getFullYear();
+                const hour = date.getHours();
+                const minute = date.getMinutes();
+                const formattedDate = `${day}-${month < 10 ? '0' : ''}${month}-${year}, ${hour}:${minute}`;
                 return <div className="table-plus datatable-nosort">{formattedDate}</div>;
             }
-
         },
         // {
         //     name: 'Status',
@@ -152,22 +162,6 @@ const FilterPart = () => {
 
         },
         {
-            name: 'Lock',
-            selector: row => row.lock,
-            cell: row => (
-                <div>
-                    {studiesOpen ? '🔒 Lock' : '🔓 Unlock'}
-                </div>
-            ),
-        },
-        {
-            name: 'Reports',
-            //selector: row => row.group,
-            cell: row => <div>
-                <button onClick={handleReportsPatient}>📜</button>
-            </div>
-        },
-        {
             name: 'Actions',
             selector: row => row.action,
             sortable: false,
@@ -178,6 +172,24 @@ const FilterPart = () => {
                 <button onClick={handleDownloadData}>/Download</button>
             </span>
             </div>,
+        },
+
+        {
+            name: 'Reports',
+            //selector: row => row.group,
+            cell: row => <div>
+                <button onClick={handleReportsPatient}>📜</button>
+            </div>
+        },
+
+        {
+            name: 'Lock',
+            selector: row => row.lock,
+            cell: row => (
+                <div>
+                    {studiesOpen ? '🔒 Lock' : '🔓 Unlock'}
+                </div>
+            ),
         },
     ];
     const combinedData = data.map(item => ({
@@ -196,7 +208,7 @@ const FilterPart = () => {
         window.open(`https://viwer-study-main.vercel.app/index.html?studyId=` + studyDataID, '_blank', 'width=1500,height=760');
     }
     const handleDownloadData = async () => {
-        
+        alert("Please wait, Downloding start shortly...")
     };
 
     const modalityOptions = ['CT', 'MR', 'DT', 'All']; // Add any other modalities here
@@ -205,6 +217,7 @@ const FilterPart = () => {
     const [searchPatientID, setSearchPatientID] = useState('');
     const [searchBodyPart, setSearchBodyPart] = useState('');
 
+    
     const handleCheckboxChange = (event) => {
         const checkboxValue = event.target.value;
         setSelectedFilters((prevFilters) => {

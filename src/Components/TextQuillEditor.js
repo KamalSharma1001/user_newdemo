@@ -1,10 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import ReactQuill from "react-quill";
 import 'quill/dist/quill.snow.css';
-import { contentControlEvent, contextualSpacingProperty } from "@syncfusion/ej2-react-documenteditor";
 import { useEffect } from "react";
 
 const TextQuillEditor = () => {
+    const [data, setData] = React.useState({
+        patientName: '',
+        modality: '',
+        studydate: ''
+    })
+    const [showFileUpload, setShowFileUpload] = useState(false);
+
     const modules = {
         toolbar: [
             [{ size: ["small", false, "large", "huge"] }],
@@ -64,16 +70,20 @@ const TextQuillEditor = () => {
         }
     };
 
-    const [data, setData] = React.useState({
-        patientName: '',
-        modality: '',
-        studydate: ''
-    })
+    let link;
+    let blob;
+    const stripHtmlTags = (html) => {
+        const doc = new DOMParser().parseFromString(html, "text/html");
+        localStorage.setItem("strippedContent", doc.body.textContent || "");
+        return doc.body.textContent || "";
+    };
 
-
-    const handleProcedureContentChange = (content, delta, source, editor) => {
-        console.log(content)
-
+    const handleProcedureContentChange = (content) => {
+        const editContent = "  " + content
+        blob = new Blob([stripHtmlTags(editContent)], {
+            type: "text/plain;charset=utf-8",
+        });
+        link = document.createElement("a");
     };
 
     useEffect(() => {
@@ -81,33 +91,61 @@ const TextQuillEditor = () => {
     }, [])
 
     const editorValue = () => {
+        const drafted = localStorage.getItem(data.patientName)
         return (
-            "Patient Name: <b>" + data.patientName + "</b><br/>" + "Modality: <b>" + data.modality + "</b><br/>" + "Study Date: <b>" + data.studydate + "</b><br/>" + "<br/><br/><br/>" + "<p></p>"
+            drafted ?
+                drafted : " Patient Name: <b>" + data.patientName + "</b>   <br/> " + "Modality: <b>" + data.modality + "</b>   <br/> " + "Study Date: <b>" + data.studydate + "</b><br/>" + "<br/><br/><br/> " + "<p></p>"
         )
     }
 
     const handleDraftClick = () => {
-        console.log("Draft button clicked. Data:", data);
+        const saveData = localStorage.getItem("strippedContent")
+        localStorage.setItem(data.patientName, saveData)
     };
 
     const handleSaveClick = () => {
-        // Create a new Blob with the HTML content
-        const blob = new Blob(['<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"></head><body>' + editorValue() + '</body></html>'], {
-            type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-        });
-        const link = document.createElement("a");
-        link.download = "document.docx";
+        link.download = "Doc_" + data.patientName + ".rtf";
         link.href = window.URL.createObjectURL(blob);
+
         document.body.appendChild(link);
         link.click();
-        document.body.removeChild(link);
+
     };
 
     return (
         <>
-            <div style={{ marginTop: "10px", textAlign: "center" }}>
-                <button onClick={handleDraftClick} style={{ marginRight: "10px",backgroundColor:'green' }}>Draft</button>
-                <button onClick={handleSaveClick} style={{ marginRight: "10px", backgroundColor: 'blue' }}>Save</button>
+            <div style={{
+                background: '#b8b2b2', boxSizing: 'border-box',
+                padding: '10px',
+                margin: '10px'
+            }}>
+                <p><b>Body Part Tempalte Preloaded Reports</b></p>
+                <div style={selectContainerStyle}>
+                    <select style={selectStyle}>
+                        <option value="Option 1">Option 1</option>
+                        <option value="Option 2">Option 2</option>
+                        <option value="Option 3">Option 3</option>
+                    </select>
+                    <select style={selectStyle}>
+                        <option value="Option A">Option A</option>
+                        <option value="Option B">Option B</option>
+                        <option value="Option C">Option C</option>
+                    </select>
+                    <select style={selectStyle}>
+                        <option value="Choice X">Choice X</option>
+                        <option value="Choice Y">Choice Y</option>
+                        <option value="Choice Z">Choice Z</option>
+                    </select>
+                </div>
+
+            </div>
+            <div style={{ marginTop: '10px', textAlign: 'center' }}>
+                <button onClick={handleDraftClick} style={{ marginRight: '10px', backgroundColor: 'green', color: 'white', padding: '5px 10px', border: 'none', borderRadius: '5px' }}>
+                    Draft
+                </button>
+                <button onClick={handleSaveClick} style={{ marginRight: '10px', backgroundColor: 'blue', color: 'white', padding: '5px 10px', border: 'none', borderRadius: '5px' }}>
+                    Save
+                </button>
             </div>
             <div style={{ display: "grid", justifyContent: "center", backgroundColor: "white" }}>
                 <ReactQuill
@@ -126,5 +164,18 @@ const TextQuillEditor = () => {
         </>
     );
 }
+
+
+const selectContainerStyle = {
+    textAlign: 'center',
+};
+
+const selectStyle = {
+    display: 'inline-block',
+    margin: '5px 4px',
+    padding: '0px',
+    border: '2px solid #ccc',
+};
+
 
 export default TextQuillEditor;

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import TextQuillEditor from './TextQuillEditor';
+
 
 const ReportsTab = () => {
   const [data, setData] = useState({
@@ -47,7 +49,7 @@ const ReportsTab = () => {
         modality: result.modality,
         studydate: result.studyDate
       })
-      console.log(result)
+      //console.log(result)
     } catch (error) {
       console.error('API request error:', error.message);
     }
@@ -61,6 +63,7 @@ const ReportsTab = () => {
 
   useEffect(() => {
     fetchData();
+
   }, []);
 
   const googleDocsUrl = 'https://docs.google.com/document/d/1e5g66iZrhgDyoPoXDubYS7Mg9ZN43ou0TXQBXUzblT0/edit';
@@ -122,7 +125,11 @@ const ReportsTab = () => {
         </div>
 
       </div>
-      {
+
+      <TextQuillEditor/>
+
+
+      {/* {
         editor ? <>
           <div style={containerStyleFrame}>
             <iframe
@@ -132,7 +139,7 @@ const ReportsTab = () => {
             ></iframe>
           </div>
         </> : ""
-      }
+      } */}
     </>
   )
 }
@@ -217,6 +224,8 @@ const Editor = () => {
     </>
   )
 }
+
+
 
 
 export default ReportsTab

@@ -13,6 +13,7 @@ import ZVPDF from './ZVPDF';
 import TextEditor from './Components/TextEditor';
 import TotalStudyData from './Components/TotalStudyData';
 import ReportsTab from './Components/ReportsTab';
+import TextQuillEditor from './Components/TextQuillEditor';
 
 function App() {
   return (
@@ -32,7 +33,11 @@ function App() {
 
         {/* Show total studies */}
         <Route path='/user/totalstudies/:id' element={<TotalStudyData />} />
-        <Route path='/user/reports/:id' element={<ReportsTab />} />
+
+        {/* OLD REPORT PAGE */}
+        {/* <Route path='/user/reports/:id' element={<ReportsTab />} /> */}
+
+        <Route path='/user/reports/:id' element={<TextQuillEditor />} />
 
         <Route path='/testerpage' element={<ApiData />} />
 

@@ -386,12 +386,13 @@ const FilterPart = () => {
 
     return (
         <>
+            
             <section class="text-gray-600 body-font ">
-                <div class="container mx-auto px-10 mx-auto mr-10">
+                <div class="container mx-auto ml-10">
                     <div class="flex flex-wrap">
                         {/* ... (Other search filter components) */}
-                        <div className="xl:w-1/4 lg:w-1/2 md:w-full px-8 text-center py-24 border-gray-200 border-opacity-60">
-                            <div className="grid grid-cols-2 gap-4">
+                        <div className="xl:w-1/6 lg:w-1/2 md:w-100 text-center py-24 border-gray-200 border-opacity-60">
+                            <div className="grid grid-cols-2 gap-2">
                                 {modalityOptions.map(modality => (
                                     <label className="flex items-center" key={modality}>
                                         <input
@@ -407,14 +408,14 @@ const FilterPart = () => {
                         </div>
 
                         {/* Patients */}
-                        <div class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6  border-gray-200 border-opacity-60">
+                        <div class="xl:w-1/5 lg:w-1/2 md:w-full py-6  border-gray-200 border-opacity-60">
                             <div>
                                 <div className="row ml-5 mt-2">
-                                    <div className="mb-3 mr-2">
+                                    <div className="mr-2">
                                         <label htmlFor="patientName" className="form-label">Patient Name: </label>
                                         <input
                                             type="text"
-                                            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 px-3 transition-colors duration-200 ease-in-out"
+                                            class="mt-1 py-2 px-2 block  w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                             id="patientName"
                                             placeholder="Enter patient's name"
                                             style={{ fontSize: "14px" }}
@@ -422,11 +423,11 @@ const FilterPart = () => {
                                             onChange={(e) => setSearchPatientName(e.target.value)}
                                         />
                                     </div>
-                                    <div className="mb-3 mr-2">
+                                    <div className="mr-2">
                                         <label htmlFor="patientID" className="form-label" style={{ fontSize: "14px" }}>Patient ID:</label>
                                         <input
                                             type="text"
-                                            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 px-3 transition-colors duration-200 ease-in-out"
+                                            class="mt-1 py-2 px-2 block  w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                             id="patientID"
                                             placeholder="Enter patient's ID"
                                             style={{ fontSize: "14px" }}
@@ -434,11 +435,11 @@ const FilterPart = () => {
                                             onChange={(e) => setSearchPatientID(e.target.value)}
                                         />
                                     </div>
-                                    <div className="mb-3 mr-2">
+                                    <div className="mr-2">
                                         <label htmlFor="bodyPart" className="form-label" style={{ fontSize: "14px" }}>Body Part:</label>
                                         <input
                                             type="text"
-                                            class="w-full bg-gray-100 bg-opacity-50 rounded border border-gray-300 focus:border-indigo-500 focus:bg-transparent focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 px-3 transition-colors duration-200 ease-in-out"
+                                            class="mt-1 py-2 px-2 block  w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                                             id="bodyPart"
                                             placeholder="Enter affected body part"
                                             style={{ fontSize: "14px" }}
@@ -451,12 +452,12 @@ const FilterPart = () => {
                         </div>
 
                         {/* Serach  button */}
-                        <div class="xl:w-1/4 lg:w-1/2 md:w-full px-20 py-[70px]  border-gray-200 border-opacity-60 mt-10">
+                        <div class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-[70px]  border-gray-200 border-opacity-60 mt-10">
                             <div className="row d-flex justify-content-center ">
-                                <button type="button" class="text-white bg-blue-600  border-0 px-2 focus:outline-none hover:bg-blue-700 rounded-full text-lg">Search</button>
+                                <button type="button" class="text-white bg-blue-600  border-0 px-6 py-2 focus:outline-none hover:bg-blue-700 rounded-2xl text-lg">Search</button>
                                 <button
                                     type="button"
-                                    class=" ml-2 text-white bg-slate-300 border-0  px-2 focus:outline-none hover:bg-blue-600 rounded-full text-lg"
+                                    class=" ml-2 text-white bg-slate-300 border-0  px-6 py-2 focus:outline-none hover:bg-blue-600 rounded-xl text-lg"
                                     onClick={() => {
                                         setSearchPatientName('');
                                         setSearchPatientID('');
@@ -473,12 +474,12 @@ const FilterPart = () => {
                         </div>
 
                         {/* Search Date  */}
-                        <div class="xl:w-1/4 lg:w-1/2 md:w-full px-8 py-6  border-gray-200 border-opacity-60">
-                            <div class="p-8">
-                                <div class="grid grid-cols-2 gap-8">
+                        <div class="xl:w-1/3 lg:w-1/2 md:w-full py-6  border-gray-200 border-opacity-60">
+                            <div class="py-8 px-4">
+                                <div class="grid grid-cols-2 gap-4">
                                     <div class="mb-4">
                                         <label for="status" class="block text-sm font-medium text-gray-700">Status</label>
-                                        <select id="status" name="status" class="mt-1  block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" onChange={handleStatusChange}>
+                                        <select id="status" name="status" class="mt-1 py-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" onChange={handleStatusChange}>
                                             <option value="All">All</option>
                                             <option value="completed">Singed Off</option>
                                             <option value="cancelled">Singed On</option>
@@ -487,7 +488,7 @@ const FilterPart = () => {
 
                                     <div class="mb-4">
                                         <label for="center" class="block text-sm font-medium text-gray-700">Center</label>
-                                        <select id="center" name="center" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" onChange={handleCenterChange}>
+                                        <select id="center" name="center" class="mt-1 py-2 block  w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" onChange={handleCenterChange}>
                                             <option value="center1">Center 1</option>
                                             <option value="center2">Center 2</option>
                                             <option value="center3">Center 3</option>
@@ -495,14 +496,14 @@ const FilterPart = () => {
                                     </div>
                                 </div>
 
-                                <div class="grid grid-cols-2 gap-8 mt-8 ">
+                                <div class="grid grid-cols-2 gap-8  ">
                                     <div class="mb-4">
                                         <label for="startDate" class="block text-sm font-medium text-gray-700">Scan Start Date</label>
-                                        <input type="date" id="startDate" name="startDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" onChange={handleStartDateChange} />
+                                        <input type="date" id="startDate" name="startDate" class="mt-1 py-2 px-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" onChange={handleStartDateChange} />
                                     </div>
                                     <div class="mb-4">
                                         <label for="endDate" class="block text-sm font-medium text-gray-700">Scan End Date</label>
-                                        <input type="date" id="endDate" name="endDate" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" onChange={handleEndDateChange} />
+                                        <input type="date" id="endDate" name="endDate" class="mt-1 py-2 px-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" onChange={handleEndDateChange} />
                                     </div>
                                 </div>
                             </div>
@@ -521,9 +522,10 @@ const FilterPart = () => {
                     <div class="flex md:ml-auto md:mr-0 mx-auto items-center flex-shrink-0 space-x-4">
                         <div className="flex justify-center space-x-4">
                             <button
-                                className="bg-slate-400 hover:bg-blue-600 text-white font-semibold  px-4 rounded-full"
+                                className="bg-slate-400 hover:bg-blue-600 py-3 w-100 text-white font-semibold  px-4 rounded-full"
                                 //onClick={() => alert("Please select one or more studies.")}
                                 onClick={handleLock}
+                                style={{ fontSize: "14px" }}
                             >
                                 {/* <Link to='/viewerOpenHoga'> */}
                                 Load Studies
@@ -532,6 +534,7 @@ const FilterPart = () => {
                             <button
                                 className="bg-slate-400 hover:bg-blue-600 text-white font-semibold px-4 rounded-full"
                                 onClick={handleZVPF}
+                                style={{ fontSize: "14px" }}
                             >
                                 ZVPF Load Studies
                             </button>
@@ -539,6 +542,7 @@ const FilterPart = () => {
                             <button
                                 className="bg-slate-400 hover:bg-blue-600 text-white font-semibold  px-4 rounded-full"
                                 onClick={handlePushStudyWindow}
+                                style={{ fontSize: "14px" }}
                             >
                                 {/* <Link to='/user/dashboard/pushstudy'> */}
                                 Push Study
@@ -548,6 +552,7 @@ const FilterPart = () => {
                             <button
                                 className="bg-slate-400 hover:bg-blue-600 text-white font-semibold  px-4 rounded-full"
                                 onClick={handleAddToAcadmics}
+                                style={{ fontSize: "14px" }}
                             >
                                 {/* <Link to='/user/dashboard/addtoacadmics'> */}
                                 {/* /teachingreference?studyInstanceUID=1.2.840.113619.2.354.3.2831209226.627.1692935261.973 */}
@@ -562,19 +567,20 @@ const FilterPart = () => {
                                 key={index}
                                 className="bg-slate-400 hover:bg-blue-600 text-white font-semibold  px-4 rounded-full"
                             >
-                                <Link to={`/user/dashboard/${label.replace(/ /g, '').toLowerCase()}`}>
+                                <Link to={/user/dashboard/${label.replace(/ /g, '').toLowerCase()}}>
                                     {label}
                                 </Link>
 
 
                             </button>
                         ))} */}
-                            <label htmlFor="groupSelect" className="text-gray-700">
+                            <label htmlFor="groupSelect" className="text-gray-700 py-3" style={{ fontSize: "14px", fontWeight: "bold" }}>
                                 Select a Group:
                             </label>
                             <select
                                 id="groupSelect"
-                                className="bg-gray-200 border border-gray-300 rounded-full px-2 text-sm text-gray-700"
+                                className="bg-gray-200 border border-gray-300 rounded-xl px-8 py-1 text-sm text-gray-700"
+
                             >
                                 <option value="Select a Group">
                                     Select...
@@ -585,7 +591,7 @@ const FilterPart = () => {
                             </select>
 
                             <button
-                                className="bg-blue-600 hover:bg-blue-900 text-white font-semibold  px-4 rounded"
+                                className="bg-blue-600 hover:bg-blue-900 text-white font-semibold  px-8 rounded-2xl" style={{ fontSize: "14px" }}
                             >
                                 Assign
                             </button>
@@ -593,6 +599,8 @@ const FilterPart = () => {
                     </div>
                 </div>
             </section>
+
+           
 
             <CustomDataTable tittleName={""} headers={Headercolumns} filterData={filteredData} filterControls={filterControls} onRowSelected={handleRowSelection} />
         </>

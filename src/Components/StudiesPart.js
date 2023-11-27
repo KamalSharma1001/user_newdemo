@@ -158,17 +158,19 @@ const FilterPart = () => {
         // },
         {
             name: 'Reported By',
-            selector: row => row.PatientId,
+            selector: row => row.PatientId ,
+            cell:row=>
+                <div className="table-plus datatable-nosort">{row.PatientId}
+                </div>
 
         },
         {
             name: 'Actions',
             selector: row => row.action,
             sortable: false,
-            cell: row => <div className="datatable-nosort"><span className='text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4 text-xs'>
+            cell: row => <div className="datatable-nosort"><span className='text-center mt-2 leading-none flex justify-center absolute bottom-0 left-0 w-full py-4 text-x'>
                 {/* <button onClick={handleViewData}>View</button> */}
                 <button onClick={handleLock}>View</button>
-
                 <button onClick={handleDownloadData}>/Download</button>
             </span>
             </div>,
@@ -217,7 +219,7 @@ const FilterPart = () => {
     const [searchPatientID, setSearchPatientID] = useState('');
     const [searchBodyPart, setSearchBodyPart] = useState('');
 
-    
+
     const handleCheckboxChange = (event) => {
         const checkboxValue = event.target.value;
         setSelectedFilters((prevFilters) => {
@@ -386,7 +388,7 @@ const FilterPart = () => {
 
     return (
         <>
-            
+
             <section class="text-gray-600 body-font ">
                 <div class="container mx-auto ml-10">
                     <div class="flex flex-wrap">
@@ -600,7 +602,7 @@ const FilterPart = () => {
                 </div>
             </section>
 
-           
+
 
             <CustomDataTable tittleName={""} headers={Headercolumns} filterData={filteredData} filterControls={filterControls} onRowSelected={handleRowSelection} />
         </>

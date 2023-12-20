@@ -33,7 +33,6 @@ const FilterPart = () => {
                 image: item.image || {},
                 id: setID(item._id)
             }));
-            ///console.log(processedData)
             setData(processedData);
 
         } catch (err) {
@@ -158,8 +157,8 @@ const FilterPart = () => {
         // },
         {
             name: 'Reported By',
-            selector: row => row.PatientId ,
-            cell:row=>
+            selector: row => row.PatientId,
+            cell: row =>
                 <div className="table-plus datatable-nosort">{row.PatientId}
                 </div>
 
@@ -194,6 +193,30 @@ const FilterPart = () => {
             ),
         },
     ];
+
+    const handleDownloadData = async () => {
+        try {
+            const zip = new JSZip();
+            const response = await fetch('https://busy-lime-bream-sock.cyclic.app/api/v2/getdata');
+            const data = await response.json();
+            const fileUrls = data[0]?.image?.FileUrls || [];
+            for (const fileUrl of fileUrls) {
+                const response = await fetch(fileUrl);
+                const blob = await response.blob();
+                const fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
+                zip.file(fileName, blob);
+            }
+            const zipContent = await zip.generateAsync({ type: "blob" });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(zipContent);
+            link.download = "downloaded_files.zip";
+            link.click();
+        } catch (error) {
+            console.error("Error downloading files:", error);
+            alert("Error downloading files. Please try again.");
+        }
+    };
+
     const combinedData = data.map(item => ({
         ...item.patient,
         ...item.series,
@@ -209,9 +232,7 @@ const FilterPart = () => {
         //window.open(`http://localhost:3001/sampleview.html?studyId=` + studyDataID, '_blank', 'width=1500,height=760');
         window.open(`https://viwer-study-main.vercel.app/index.html?studyId=` + studyDataID, '_blank', 'width=1500,height=760');
     }
-    const handleDownloadData = async () => {
-        alert("Please wait, Downloding start shortly...")
-    };
+    
 
     const modalityOptions = ['CT', 'MR', 'DT', 'All']; // Add any other modalities here
     const [selectedFilters, setSelectedFilters] = useState([]);
@@ -316,9 +337,25 @@ const FilterPart = () => {
 
         }
     }
-    const handleAddToAcadmics = () => {
+    const handleAddToAcadmics = async () => {
         if (arePatientsSelected()) {
-            navigate("/user/dashboard/addtoacadmics")
+            try {
+                const GetUser = localStorage.getItem('email');
+                const StudyId = selectedPatients.map(patient => patient.StudyID).join(',');
+                const responseAPI = await fetch("http://localhost:8000/api/v2/savebookmarks", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ GetUser, StudyId, ID })
+                });
+
+                const result = await responseAPI.json();
+                alert(result.message);
+            } catch (error) {
+                console.error("An error occurred while bookmarking studies:", error);
+                alert("An unexpected error occurred. Please try again later.");
+            }
+
+            //navigate("/user/dashboard/addtoacadmics")
         }
         else {
             alert("Please select one or more studies.")
@@ -601,8 +638,6 @@ const FilterPart = () => {
                     </div>
                 </div>
             </section>
-
-
 
             <CustomDataTable tittleName={""} headers={Headercolumns} filterData={filteredData} filterControls={filterControls} onRowSelected={handleRowSelection} />
         </>
